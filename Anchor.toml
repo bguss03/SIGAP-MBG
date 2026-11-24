@@ -1,0 +1,20 @@
+[toolchain]
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.devnet]
+sigap_mbg = "HvxaHurWiwNmwkrBwDWE5CMCX1JH4VCNeFkAapmqFPfX"
+
+[programs.localnet]
+sigap_mbg = "11111111111111111111111111111111"
+
+[provider]
+cluster = "devnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "cargo test"
+
+[hooks]

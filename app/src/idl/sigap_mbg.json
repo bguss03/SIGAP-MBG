@@ -1,0 +1,2120 @@
+{
+  "address": "HvxaHurWiwNmwkrBwDWE5CMCX1JH4VCNeFkAapmqFPfX",
+  "metadata": {
+    "name": "sigap_mbg",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "SIGAP-MBG: ketertelusuran keamanan pangan per-batch Program MBG"
+  },
+  "instructions": [
+    {
+      "name": "confirm_receipt",
+      "docs": [
+        "Sekolah scan QR saat boks tiba."
+      ],
+      "discriminator": [
+        203,
+        36,
+        80,
+        115,
+        249,
+        12,
+        141,
+        170
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "member",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "batch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch.batch_id",
+                "account": "Batch"
+              }
+            ]
+          }
+        },
+        {
+          "name": "delivery",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  108,
+                  105,
+                  118,
+                  101,
+                  114,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch"
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_batch",
+      "discriminator": [
+        159,
+        198,
+        248,
+        43,
+        248,
+        31,
+        235,
+        86
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "member",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "batch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "batch_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "temp_log",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  101,
+                  109,
+                  112,
+                  108,
+                  111,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "batch_id",
+          "type": "string"
+        },
+        {
+          "name": "menu",
+          "type": "string"
+        },
+        {
+          "name": "supplier",
+          "type": "string"
+        },
+        {
+          "name": "ingredients_expiry",
+          "type": "i64"
+        },
+        {
+          "name": "cooked_at",
+          "type": "i64"
+        },
+        {
+          "name": "retain_sample_id",
+          "type": "string"
+        },
+        {
+          "name": "portions",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "dispatch_batch",
+      "docs": [
+        "Batch dikirim ke satu sekolah (dipanggil sekali per sekolah tujuan)."
+      ],
+      "discriminator": [
+        114,
+        100,
+        216,
+        65,
+        69,
+        249,
+        154,
+        100
+      ],
+      "accounts": [
+        {
+          "name": "member",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "batch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch.batch_id",
+                "account": "Batch"
+              }
+            ]
+          }
+        },
+        {
+          "name": "delivery",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  108,
+                  105,
+                  118,
+                  101,
+                  114,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch"
+              },
+              {
+                "kind": "arg",
+                "path": "school"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "school",
+          "type": "pubkey"
+        },
+        {
+          "name": "portions",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "initialize",
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "ConfigParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "record_consumption",
+      "docs": [
+        "Sekolah mencatat jam konsumsi. Aturan \"Batas waktu\" dijalankan di sini."
+      ],
+      "discriminator": [
+        189,
+        90,
+        61,
+        107,
+        28,
+        196,
+        124,
+        160
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "member",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "batch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch.batch_id",
+                "account": "Batch"
+              }
+            ]
+          }
+        },
+        {
+          "name": "delivery",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  108,
+                  105,
+                  118,
+                  101,
+                  114,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch"
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "consumed_at",
+          "type": "i64"
+        }
+      ]
+    },
+    {
+      "name": "record_temperatures",
+      "docs": [
+        "Sensor (atau gateway SPPG) mengunggah pembacaan suhu (buffer tiap 5 menit).",
+        "Aturan \"Rentang suhu\" dijalankan di sini dan setiap pembacaan di-hash berantai."
+      ],
+      "discriminator": [
+        56,
+        111,
+        77,
+        201,
+        233,
+        119,
+        212,
+        210
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "member",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "batch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch.batch_id",
+                "account": "Batch"
+              }
+            ]
+          }
+        },
+        {
+          "name": "temp_log",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  101,
+                  109,
+                  112,
+                  108,
+                  111,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "readings",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "TempReading"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "report_incident",
+      "docs": [
+        "Sekolah / puskesmas melaporkan gejala — dicatat SEKALI untuk semua instansi."
+      ],
+      "discriminator": [
+        126,
+        5,
+        154,
+        89,
+        39,
+        235,
+        130,
+        56
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "member",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "batch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch.batch_id",
+                "account": "Batch"
+              }
+            ]
+          }
+        },
+        {
+          "name": "incident",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  105,
+                  110,
+                  99,
+                  105,
+                  100,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch"
+              },
+              {
+                "kind": "account",
+                "path": "batch.incident_count",
+                "account": "Batch"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "affected_count",
+          "type": "u32"
+        },
+        {
+          "name": "evidence_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "set_member",
+      "docs": [
+        "Admin (BGN) mendaftarkan / mengubah peran sebuah wallet instansi."
+      ],
+      "discriminator": [
+        134,
+        189,
+        214,
+        255,
+        71,
+        20,
+        54,
+        147
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "member",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "wallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "wallet",
+          "type": "pubkey"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "roles",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "submit_lab_result",
+      "docs": [
+        "BPOM mengunggah hash hasil uji lab sampel retain (dokumen disimpan off-chain / IPFS)."
+      ],
+      "discriminator": [
+        39,
+        242,
+        86,
+        70,
+        25,
+        205,
+        94,
+        149
+      ],
+      "accounts": [
+        {
+          "name": "member",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "batch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch.batch_id",
+                "account": "Batch"
+              }
+            ]
+          },
+          "relations": [
+            "recall"
+          ]
+        },
+        {
+          "name": "recall",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  97,
+                  108,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "result_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "contaminated",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "update_config",
+      "discriminator": [
+        29,
+        158,
+        252,
+        191,
+        10,
+        83,
+        219,
+        99
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "ConfigParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "verify_incident",
+      "docs": [
+        "Dinkes memverifikasi laporan. Jika terverifikasi → RecallContract membekukan batch."
+      ],
+      "discriminator": [
+        231,
+        223,
+        95,
+        153,
+        35,
+        243,
+        204,
+        13
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "member",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "batch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch.batch_id",
+                "account": "Batch"
+              }
+            ]
+          },
+          "relations": [
+            "incident"
+          ]
+        },
+        {
+          "name": "incident",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  105,
+                  110,
+                  99,
+                  105,
+                  100,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch"
+              },
+              {
+                "kind": "account",
+                "path": "incident.index",
+                "account": "Incident"
+              }
+            ]
+          }
+        },
+        {
+          "name": "recall",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  97,
+                  108,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "batch"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "confirmed",
+          "type": "bool"
+        },
+        {
+          "name": "note",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Batch",
+      "discriminator": [
+        156,
+        194,
+        70,
+        44,
+        22,
+        88,
+        137,
+        44
+      ]
+    },
+    {
+      "name": "Config",
+      "discriminator": [
+        155,
+        12,
+        170,
+        224,
+        30,
+        250,
+        204,
+        130
+      ]
+    },
+    {
+      "name": "Delivery",
+      "discriminator": [
+        121,
+        32,
+        31,
+        112,
+        7,
+        74,
+        193,
+        19
+      ]
+    },
+    {
+      "name": "Incident",
+      "discriminator": [
+        144,
+        81,
+        144,
+        130,
+        200,
+        193,
+        26,
+        111
+      ]
+    },
+    {
+      "name": "Member",
+      "discriminator": [
+        54,
+        19,
+        162,
+        21,
+        29,
+        166,
+        17,
+        198
+      ]
+    },
+    {
+      "name": "Recall",
+      "discriminator": [
+        148,
+        110,
+        21,
+        21,
+        183,
+        235,
+        125,
+        77
+      ]
+    },
+    {
+      "name": "TempLog",
+      "discriminator": [
+        152,
+        219,
+        102,
+        49,
+        53,
+        53,
+        183,
+        178
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "BatchCreated",
+      "discriminator": [
+        231,
+        92,
+        210,
+        203,
+        2,
+        59,
+        109,
+        234
+      ]
+    },
+    {
+      "name": "BatchDispatched",
+      "discriminator": [
+        237,
+        65,
+        137,
+        68,
+        118,
+        131,
+        203,
+        152
+      ]
+    },
+    {
+      "name": "IncidentReported",
+      "discriminator": [
+        105,
+        191,
+        58,
+        193,
+        50,
+        86,
+        61,
+        103
+      ]
+    },
+    {
+      "name": "LabResultSubmitted",
+      "discriminator": [
+        19,
+        220,
+        81,
+        128,
+        91,
+        103,
+        39,
+        152
+      ]
+    },
+    {
+      "name": "MemberUpdated",
+      "discriminator": [
+        122,
+        225,
+        250,
+        121,
+        60,
+        189,
+        11,
+        147
+      ]
+    },
+    {
+      "name": "RecallTriggered",
+      "discriminator": [
+        199,
+        139,
+        178,
+        178,
+        75,
+        124,
+        151,
+        206
+      ]
+    },
+    {
+      "name": "TemperatureAlert",
+      "discriminator": [
+        108,
+        250,
+        15,
+        70,
+        107,
+        100,
+        104,
+        65
+      ]
+    },
+    {
+      "name": "TimeLimitExceeded",
+      "discriminator": [
+        4,
+        147,
+        154,
+        66,
+        233,
+        237,
+        200,
+        209
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Unauthorized",
+      "msg": "Wallet tidak memiliki peran yang dibutuhkan"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidId",
+      "msg": "ID tidak valid (1-32 karakter)"
+    },
+    {
+      "code": 6002,
+      "name": "TextTooLong",
+      "msg": "Teks terlalu panjang"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidConfig",
+      "msg": "Konfigurasi tidak valid"
+    },
+    {
+      "code": 6004,
+      "name": "FutureTimestamp",
+      "msg": "Waktu berada di masa depan"
+    },
+    {
+      "code": 6005,
+      "name": "TimestampTooOld",
+      "msg": "Waktu terlalu lampau"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidTimestamp",
+      "msg": "Waktu tidak valid / tidak berurutan"
+    },
+    {
+      "code": 6007,
+      "name": "IngredientExpired",
+      "msg": "Bahan baku sudah kedaluwarsa saat dimasak"
+    },
+    {
+      "code": 6008,
+      "name": "NotBatchOwner",
+      "msg": "Hanya SPPG pemilik batch yang boleh melakukan ini"
+    },
+    {
+      "code": 6009,
+      "name": "BatchFrozen",
+      "msg": "Batch DIBEKUKAN (recall) — jangan dikonsumsi"
+    },
+    {
+      "code": 6010,
+      "name": "AlreadyRecorded",
+      "msg": "Data sudah tercatat sebelumnya"
+    },
+    {
+      "code": 6011,
+      "name": "TooManyReadings",
+      "msg": "Jumlah pembacaan suhu per transaksi 1-24"
+    }
+  ],
+  "types": [
+    {
+      "name": "Batch",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "batch_id",
+            "type": "string"
+          },
+          {
+            "name": "sppg",
+            "type": "pubkey"
+          },
+          {
+            "name": "menu",
+            "type": "string"
+          },
+          {
+            "name": "supplier",
+            "type": "string"
+          },
+          {
+            "name": "ingredients_expiry",
+            "type": "i64"
+          },
+          {
+            "name": "cooked_at",
+            "type": "i64"
+          },
+          {
+            "name": "retain_sample_id",
+            "type": "string"
+          },
+          {
+            "name": "portions",
+            "type": "u32"
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "BatchStatus"
+              }
+            }
+          },
+          {
+            "name": "flags",
+            "type": "u8"
+          },
+          {
+            "name": "delivery_count",
+            "type": "u32"
+          },
+          {
+            "name": "incident_count",
+            "type": "u32"
+          },
+          {
+            "name": "temp_count",
+            "type": "u32"
+          },
+          {
+            "name": "last_temp_at",
+            "type": "i64"
+          },
+          {
+            "name": "last_temp_x10",
+            "type": "i16"
+          },
+          {
+            "name": "min_temp_x10",
+            "type": "i16"
+          },
+          {
+            "name": "max_temp_x10",
+            "type": "i16"
+          },
+          {
+            "name": "danger_seconds",
+            "type": "u32"
+          },
+          {
+            "name": "temp_log_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "lab_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BatchCreated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "batch_id",
+            "type": "string"
+          },
+          {
+            "name": "sppg",
+            "type": "pubkey"
+          },
+          {
+            "name": "cooked_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BatchDispatched",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "batch_id",
+            "type": "string"
+          },
+          {
+            "name": "school",
+            "type": "pubkey"
+          },
+          {
+            "name": "portions",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BatchStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Diproduksi"
+          },
+          {
+            "name": "Dikirim"
+          },
+          {
+            "name": "Peringatan"
+          },
+          {
+            "name": "Dibekukan"
+          },
+          {
+            "name": "Ditarik"
+          },
+          {
+            "name": "Dibebaskan"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Config",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "sop_max_minutes",
+            "docs": [
+              "Batas SOP jam masak → jam konsumsi (menit)"
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "danger_min_x10",
+            "docs": [
+              "Zona bahaya suhu (°C x10), mis. 50 = 5,0°C dan 600 = 60,0°C"
+            ],
+            "type": "i16"
+          },
+          {
+            "name": "danger_max_x10",
+            "type": "i16"
+          },
+          {
+            "name": "danger_max_minutes",
+            "docs": [
+              "Lama maksimum kumulatif di zona bahaya (menit)"
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "batch_count",
+            "type": "u64"
+          },
+          {
+            "name": "incident_count",
+            "type": "u64"
+          },
+          {
+            "name": "recall_count",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConfigParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "sop_max_minutes",
+            "type": "u32"
+          },
+          {
+            "name": "danger_min_x10",
+            "type": "i16"
+          },
+          {
+            "name": "danger_max_x10",
+            "type": "i16"
+          },
+          {
+            "name": "danger_max_minutes",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Delivery",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "batch",
+            "type": "pubkey"
+          },
+          {
+            "name": "school",
+            "type": "pubkey"
+          },
+          {
+            "name": "portions",
+            "type": "u32"
+          },
+          {
+            "name": "dispatched_at",
+            "type": "i64"
+          },
+          {
+            "name": "received_at",
+            "type": "i64"
+          },
+          {
+            "name": "consumed_at",
+            "type": "i64"
+          },
+          {
+            "name": "flags",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Incident",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "batch",
+            "type": "pubkey"
+          },
+          {
+            "name": "index",
+            "type": "u32"
+          },
+          {
+            "name": "reporter",
+            "type": "pubkey"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "affected_count",
+            "type": "u32"
+          },
+          {
+            "name": "evidence_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "reported_at",
+            "type": "i64"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "IncidentStatus"
+              }
+            }
+          },
+          {
+            "name": "verifier",
+            "type": "pubkey"
+          },
+          {
+            "name": "verified_at",
+            "type": "i64"
+          },
+          {
+            "name": "note",
+            "type": "string"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "IncidentReported",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "batch_id",
+            "type": "string"
+          },
+          {
+            "name": "index",
+            "type": "u32"
+          },
+          {
+            "name": "affected_count",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "IncidentStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Dilaporkan"
+          },
+          {
+            "name": "Terverifikasi"
+          },
+          {
+            "name": "Ditolak"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LabResult",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Menunggu"
+          },
+          {
+            "name": "Aman"
+          },
+          {
+            "name": "Terkontaminasi"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LabResultSubmitted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "batch_id",
+            "type": "string"
+          },
+          {
+            "name": "contaminated",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Member",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "roles",
+            "type": "u8"
+          },
+          {
+            "name": "active",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MemberUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "roles",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Recall",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "batch",
+            "type": "pubkey"
+          },
+          {
+            "name": "batch_id",
+            "type": "string"
+          },
+          {
+            "name": "trigger_incident",
+            "type": "pubkey"
+          },
+          {
+            "name": "frozen_by",
+            "type": "pubkey"
+          },
+          {
+            "name": "frozen_at",
+            "type": "i64"
+          },
+          {
+            "name": "affected_deliveries",
+            "type": "u32"
+          },
+          {
+            "name": "lab_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "lab_result",
+            "type": {
+              "defined": {
+                "name": "LabResult"
+              }
+            }
+          },
+          {
+            "name": "lab_at",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RecallTriggered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "batch_id",
+            "type": "string"
+          },
+          {
+            "name": "incident",
+            "type": "pubkey"
+          },
+          {
+            "name": "affected_deliveries",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TempLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "batch",
+            "type": "pubkey"
+          },
+          {
+            "name": "head",
+            "type": "u8"
+          },
+          {
+            "name": "readings",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "TempReading"
+                }
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TempReading",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "ts",
+            "type": "i64"
+          },
+          {
+            "name": "temp_x10",
+            "type": "i16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TemperatureAlert",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "batch_id",
+            "type": "string"
+          },
+          {
+            "name": "sppg",
+            "type": "pubkey"
+          },
+          {
+            "name": "danger_minutes",
+            "type": "u32"
+          },
+          {
+            "name": "limit_minutes",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TimeLimitExceeded",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "batch_id",
+            "type": "string"
+          },
+          {
+            "name": "school",
+            "type": "pubkey"
+          },
+          {
+            "name": "elapsed_minutes",
+            "type": "u32"
+          },
+          {
+            "name": "limit_minutes",
+            "type": "u32"
+          }
+        ]
+      }
+    }
+  ]
+}

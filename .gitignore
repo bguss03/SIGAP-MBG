@@ -1,0 +1,25 @@
+# Anchor / Solana / Rust
+.anchor
+target
+**/*.rs.bk
+test-ledger
+*-keypair.json
+
+# Node / Next.js / TypeScript
+node_modules
+.yarn
+app/.next
+app/out
+*.tsbuildinfo
+.vercel
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env*.local
+
+# OS & Editor
+.DS_Store
+Thumbs.db

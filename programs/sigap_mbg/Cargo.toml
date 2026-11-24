@@ -1,0 +1,27 @@
+[package]
+name = "sigap_mbg"
+version = "0.1.0"
+description = "SIGAP-MBG: ketertelusuran keamanan pangan per-batch Program MBG"
+edition.workspace = true
+rust-version.workspace = true
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "sigap_mbg"
+
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build"]
+anchor-debug = []
+custom-heap = []
+custom-panic = []
+
+[dependencies]
+anchor-lang = { version = "1.2.2", features = ["init-if-needed"] }
+solana-sha256-hasher = "3.1.0"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(target_os, values("solana"))'] }
